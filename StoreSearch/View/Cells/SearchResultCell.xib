@@ -43,6 +43,7 @@
                     <constraint firstItem="oXn-Pg-BAO" firstAttribute="leading" secondItem="2T8-Vb-zdl" secondAttribute="leading" constant="16" id="1ao-Ob-QY1"/>
                     <constraint firstAttribute="bottom" secondItem="uZY-LB-Sjd" secondAttribute="bottom" constant="16" id="9qR-FQ-h86"/>
                     <constraint firstItem="uZY-LB-Sjd" firstAttribute="leading" secondItem="oXn-Pg-BAO" secondAttribute="trailing" constant="8" id="LgP-Om-f8r"/>
+                    <constraint firstAttribute="bottom" secondItem="oXn-Pg-BAO" secondAttribute="bottom" constant="10" id="Pfq-sQ-EPI"/>
                     <constraint firstAttribute="trailing" secondItem="uZY-LB-Sjd" secondAttribute="trailing" constant="16" id="VTJ-zK-uz1"/>
                     <constraint firstItem="pcG-rt-VCo" firstAttribute="top" secondItem="2T8-Vb-zdl" secondAttribute="top" constant="16" id="fqM-oI-flG"/>
                     <constraint firstItem="uZY-LB-Sjd" firstAttribute="top" secondItem="pcG-rt-VCo" secondAttribute="bottom" constant="8" id="o6E-gm-7AT"/>
@@ -65,7 +66,7 @@
             <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

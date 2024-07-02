@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_72" orientation="portrait" appearance="dark"/>
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -14,11 +14,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="SearchViewController" customModule="StoreSearch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="DxQ-Oi-cYC">
-                                <rect key="frame" x="0.0" y="59" width="430" height="839"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="jvo-KL-jVc"/>
@@ -26,34 +26,58 @@
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" placeholder="App name, artist, song, album, e-book" translatesAutoresizingMaskIntoConstraints="NO" id="RmH-EN-T8I">
-                                <rect key="frame" x="0.0" y="59" width="430" height="56"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="56"/>
                                 <color key="barTintColor" name="SearchBar"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="rfN-xd-Cqt"/>
                                 </connections>
                             </searchBar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ShC-ea-q6Y">
+                                <rect key="frame" x="0.0" y="115" width="393" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" id="r5Y-no-Haf">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="t6z-Ip-cV8">
+                                            <rect key="frame" x="16" y="5.6666666666666679" width="361" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="All"/>
+                                                <segment title="Music"/>
+                                                <segment title="Software"/>
+                                                <segment title="E-books"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="segmentedChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="TbW-bi-uUJ"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DxQ-Oi-cYC" secondAttribute="trailing" id="2o2-dJ-6NT"/>
+                            <constraint firstItem="ShC-ea-q6Y" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7y9-hP-sHD"/>
                             <constraint firstItem="RmH-EN-T8I" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="CAM-5Q-ysJ"/>
                             <constraint firstItem="DxQ-Oi-cYC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="CGM-Sq-FMg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="DxQ-Oi-cYC" secondAttribute="bottom" id="FES-PH-fXl"/>
                             <constraint firstItem="RmH-EN-T8I" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="NlF-iS-UBS"/>
+                            <constraint firstItem="ShC-ea-q6Y" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YlJ-aR-iX1"/>
                             <constraint firstItem="DxQ-Oi-cYC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="cle-0i-kf3"/>
                             <constraint firstItem="RmH-EN-T8I" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="j3B-7q-WVC"/>
+                            <constraint firstItem="ShC-ea-q6Y" firstAttribute="top" secondItem="RmH-EN-T8I" secondAttribute="bottom" id="s90-1L-mC4"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="searchBar" destination="RmH-EN-T8I" id="db8-mC-dG7"/>
+                        <outlet property="segmentedControl" destination="t6z-Ip-cV8" id="NHB-s8-N35"/>
                         <outlet property="tableView" destination="DxQ-Oi-cYC" id="wdg-ue-snL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75.572519083969468" y="-2.1126760563380285"/>
+            <point key="canvasLocation" x="75.348837209302332" y="-2.5751072961373391"/>
         </scene>
     </scenes>
     <resources>

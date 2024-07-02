@@ -9,6 +9,8 @@ import UIKit
 
 class SearchResultCell: UITableViewCell {
     
+    var downloadTask: URLSessionDownloadTask?
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
     @IBOutlet weak var artworkImageView: UIImageView!
@@ -24,4 +26,22 @@ class SearchResultCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    func configure(for result: SearchResult) {
+        nameLabel.text = result.name
+        if result.artist.isEmpty {
+            artistNameLabel.text = "Unknown"
+        } else {
+            artistNameLabel.text = String(format: "%@ (%@)", result.artist, result.type)
+        }
+        artworkImageView.image = UIImage(systemName: "square")
+        if let imageURL = URL(string: result.imageSmall) {
+            downloadTask = artworkImageView.loadImage(url: imageURL)
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        downloadTask?.cancel()
+    }
+    
 }
