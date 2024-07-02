@@ -74,6 +74,14 @@ class SearchViewController: UIViewController {
         performSearch()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowDetail" {
+            let controller = segue.destination as! DetailViewController
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                controller.searchResult = searchResults[indexPath.row]
+            }
+        }
+    }
 }
 
 // MARK: - UISearchBarDelegate
@@ -156,6 +164,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let sender = tableView.cellForRow(at: indexPath)
+        performSegue(withIdentifier: "ShowDetail", sender: sender)
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

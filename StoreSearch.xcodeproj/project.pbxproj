@@ -19,6 +19,7 @@
 		D95E9FCB2C32A56D00CC6011 /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D95E9FCA2C32A56D00CC6011 /* NothingFoundCell.xib */; };
 		D99E392E2C33F8E30003AD03 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D95E9FB62C32848500CC6011 /* LaunchScreen.storyboard */; };
 		D99E39312C33FB4F0003AD03 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99E39302C33FB4F0003AD03 /* UIImageView+DownloadImage.swift */; };
+		D99E39332C341F800003AD03 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99E39322C341F800003AD03 /* DetailViewController.swift */; };
 		D9A1DC5E2C332CD600682F0A /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9A1DC5D2C332CD600682F0A /* LoadingCell.xib */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		D95E9FC72C32A31D00CC6011 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		D95E9FCA2C32A56D00CC6011 /* NothingFoundCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NothingFoundCell.xib; sourceTree = "<group>"; };
 		D99E39302C33FB4F0003AD03 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
+		D99E39322C341F800003AD03 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D9A1DC5D2C332CD600682F0A /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,7 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				D95E9FAC2C32848400CC6011 /* SearchViewController.swift */,
-				D95E9FC72C32A31D00CC6011 /* SearchResultCell.swift */,
+				D99E39322C341F800003AD03 /* DetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -122,6 +124,7 @@
 				D95E9FC52C329CD400CC6011 /* SearchResultCell.xib */,
 				D95E9FCA2C32A56D00CC6011 /* NothingFoundCell.xib */,
 				D9A1DC5D2C332CD600682F0A /* LoadingCell.xib */,
+				D95E9FC72C32A31D00CC6011 /* SearchResultCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 				D95E9FC32C3292D500CC6011 /* SearchResult.swift in Sources */,
 				D95E9FAB2C32848400CC6011 /* SceneDelegate.swift in Sources */,
 				D95E9FC82C32A31D00CC6011 /* SearchResultCell.swift in Sources */,
+				D99E39332C341F800003AD03 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
