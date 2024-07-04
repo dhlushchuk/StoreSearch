@@ -17,6 +17,7 @@ class SearchViewController: UIViewController {
         }
     }
     
+    var landscapeVC: LandscapeViewController?
     var dataTask: URLSessionDataTask?
     var searchResults = [SearchResult]()
     var hasSearched = false
@@ -33,6 +34,18 @@ class SearchViewController: UIViewController {
         tableView.register(UINib(nibName: TableView.CellIdentifiers.loadingCell, bundle: nil), forCellReuseIdentifier: TableView.CellIdentifiers.loadingCell)
         tableView.contentInset = UIEdgeInsets(top: searchBar.frame.height + segmentedControl.frame.height, left: 0, bottom: 0, right: 0)
         searchBar.becomeFirstResponder()
+    }
+    
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: any UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        switch newCollection.verticalSizeClass {
+        case .compact:
+            showLandscape(with: coordinator)
+        case .regular, .unspecified:
+            hideLandscape(with: coordinator)
+        @unknown default:
+            break
+        }
     }
     
     func iTunesURL(searchText: String, category: Int) -> URL {
@@ -80,6 +93,40 @@ class SearchViewController: UIViewController {
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
                 controller.searchResult = searchResults[indexPath.row]
             }
+        }
+    }
+    
+    func showLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        guard landscapeVC == nil else { return }
+        landscapeVC = storyboard!.instantiateViewController(withIdentifier: "LandscapeViewController") as? LandscapeViewController
+        if let landscapeVC {
+            landscapeVC.searchResults = searchResults
+            landscapeVC.view.frame = view.bounds
+            landscapeVC.view.alpha = 0
+            view.addSubview(landscapeVC.view)
+            addChild(landscapeVC)
+            coordinator.animate(alongsideTransition: { _ in
+                landscapeVC.view.alpha = 1
+                self.searchBar.resignFirstResponder()
+                if self.presentedViewController != nil {
+                    self.dismiss(animated: true)
+                }
+            }, completion: { _ in
+                landscapeVC.didMove(toParent: self)
+            })
+        }
+    }
+    
+    func hideLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        if let controller = landscapeVC {
+            controller.willMove(toParent: nil)
+            coordinator.animate(alongsideTransition: { _ in
+                controller.view.alpha = 0
+            }, completion: { _ in
+                controller.view.removeFromSuperview()
+                controller.removeFromParent()
+                self.landscapeVC = nil
+            })
         }
     }
 }

@@ -9,8 +9,15 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    enum AnimationStyle {
+        case slide
+        case fade
+    }
+    
+    var dismissStyle: AnimationStyle = .fade
     var searchResult: SearchResult!
     var downloadTask: URLSessionDownloadTask?
+    var dimmingView: GradientView!
     
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var artworkImageView: UIImageView!
@@ -19,15 +26,36 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var kindLabel: UILabel!
     @IBOutlet weak var genreLabel: UILabel!
     @IBOutlet weak var priceButton: UIButton!
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        transitioningDelegate = self
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        popupView.layer.cornerRadius = 10
+        setupUI()
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
         gestureRecognizer.cancelsTouchesInView = false
         gestureRecognizer.delegate = self
-        view.addGestureRecognizer(gestureRecognizer)
+        dimmingView.addGestureRecognizer(gestureRecognizer)
         updateUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        popupView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        UIView.animateKeyframes(withDuration: 0.4, delay: 0, options: .calculationModeCubic) {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.334) {
+                self.popupView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.334, relativeDuration: 0.33) {
+                self.popupView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.666, relativeDuration: 0.333) {
+                self.popupView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            }
+        }
     }
     
     deinit {
@@ -35,7 +63,27 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func close() {
-        dismiss(animated: true)
+        dismissStyle = .slide
+        UIView.animate(withDuration: 0.3, animations: {
+            self.popupView.transform = CGAffineTransform(
+                translationX: 0,
+                y: -self.view.frame.height * 1.5
+            ).concatenating(CGAffineTransform(scaleX: 0.5, y: 0.5))
+        }, completion: { _ in
+            self.dismiss(animated: true)
+        })
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .clear
+        dimmingView = GradientView(frame: .zero)
+        dimmingView.frame = view.bounds
+        view.insertSubview(dimmingView, at: 0)
+        popupView.layer.cornerRadius = 10
+        popupView.layer.shadowColor = UIColor.black.cgColor
+        popupView.layer.shadowOpacity = 0.1
+        popupView.layer.shadowOffset = CGSize(width: 2, height: 2)
+        popupView.layer.masksToBounds = false
     }
     
     private func updateUI() {
@@ -78,6 +126,22 @@ extension DetailViewController: UIGestureRecognizerDelegate {
         _ gestureRecognizer: UIGestureRecognizer,
         shouldReceive touch: UITouch
     ) -> Bool {
-        return touch.view === self.view
+        return touch.view === self.dimmingView
     }
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+extension DetailViewController : UIViewControllerTransitioningDelegate {
+//    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
+//        return BounceAnimationController()
+//    }
+//    
+//    func animationController(forDismissed dismissed: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
+//        switch dismissStyle {
+//        case .slide:
+//            return SlideOutAnimationController()
+//        case .fade:
+//            return FadeOutAnimationController()
+//        }
+//    }
 }
