@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class DetailViewController: UIViewController {
     
@@ -15,9 +16,16 @@ class DetailViewController: UIViewController {
     }
     
     var dismissStyle: AnimationStyle = .fade
-    var searchResult: SearchResult!
+    var searchResult: SearchResult! {
+        didSet {
+            if isViewLoaded {
+                updateUI()
+            }
+        }
+    }
     var downloadTask: URLSessionDownloadTask?
     var dimmingView: GradientView!
+    var isPopUp = false
     
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var artworkImageView: UIImageView!
@@ -34,12 +42,20 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
-        gestureRecognizer.cancelsTouchesInView = false
-        gestureRecognizer.delegate = self
-        dimmingView.addGestureRecognizer(gestureRecognizer)
-        updateUI()
+        if isPopUp {
+            setupUI()
+            let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
+            gestureRecognizer.cancelsTouchesInView = false
+            gestureRecognizer.delegate = self
+            dimmingView.addGestureRecognizer(gestureRecognizer)
+        } else {
+            view.backgroundColor = .systemBackground
+            popupView.isHidden = true
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showPopover))
+        }
+        if searchResult != nil {
+            updateUI()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,12 +126,23 @@ class DetailViewController: UIViewController {
             priceText = ""
         }
         priceButton.setTitle(priceText, for: .normal)
+        popupView.isHidden = false
     }
 
     @IBAction func openInStore() {
         if let url = URL(string: searchResult.storeURL) {
             UIApplication.shared.open(url, options: [:])
         }
+    }
+    
+    @objc func showPopover(_ sender: UIBarButtonItem) {
+        guard let popover = storyboard?.instantiateViewController(withIdentifier: "PopoverView") as? MenuViewController else { return }
+        popover.modalPresentationStyle = .popover
+        if let ppc = popover.popoverPresentationController {
+            ppc.barButtonItem = sender
+        }
+        popover.delegate = self
+        present(popover, animated: true)
     }
     
 }
@@ -144,4 +171,26 @@ extension DetailViewController : UIViewControllerTransitioningDelegate {
 //            return FadeOutAnimationController()
 //        }
 //    }
+}
+
+// MARK: - MenuViewControllerDelegate
+extension DetailViewController: MenuViewControllerDelegate {
+    func menuViewControllerSendEmail(_ controller: MenuViewController) {
+        dismiss(animated: true) {
+            if MFMailComposeViewController.canSendMail() {
+                let controller = MFMailComposeViewController()
+                controller.mailComposeDelegate = self
+                controller.setSubject("Support Request")
+                controller.setToRecipients(["your@email-address-here.com"])
+                self.present(controller, animated: true)
+            }
+        }
+    }
+}
+
+// MARK: - MFMailComposeViewControllerDelegate
+extension DetailViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: (any Error)?) {
+        dismiss(animated: true)
+    }
 }
