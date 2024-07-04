@@ -163,7 +163,7 @@ class LandscapeViewController: UIViewController {
     
     private func showNothingFoundLabel() {
         let label = UILabel(frame: .zero)
-        label.text = "Nothing Found"
+        label.text = NSLocalizedString("Nothing Found", comment: "Localized nothing found label: Nothing Found")
         label.textColor = .label
         label.backgroundColor = .clear
         label.sizeToFit()

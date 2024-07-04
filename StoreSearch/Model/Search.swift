@@ -71,8 +71,11 @@ class Search {
     }
     
     func iTunesURL(searchText: String, category: Category) -> URL {
+        let locale = Locale.autoupdatingCurrent
+        let language = locale.identifier
+        let countryCode = locale.region?.identifier ?? "en_US"
         let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-            let urlString = "https://itunes.apple.com/search?term=\(encodedText)&limit=200&entity=\(category.type)"
+            let urlString = "https://itunes.apple.com/search?term=\(encodedText)&limit=200&entity=\(category.type)&lang=\(language)&country=\(countryCode)"
         return URL(string: urlString)!
     }
     
